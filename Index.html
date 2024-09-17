@@ -25,14 +25,14 @@
 
         /* Typewriter animation styles */
         .typewriter-text {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-top: 30px;
             white-space: nowrap;
             overflow: hidden;
             border-right: 3px solid white;
             width: 0;
             letter-spacing: 2px;
-            animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+            animation: typing 3s steps(30, end) forwards, blink-caret 0.75s step-end infinite;
         }
 
         @keyframes typing {
@@ -43,6 +43,19 @@
         @keyframes blink-caret {
             from, to { border-color: transparent; }
             50% { border-color: white; }
+        }
+
+        /* Large Sovernet Text */
+        .sovernet-text {
+            font-size: 3rem;
+            letter-spacing: 5px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Glow effect */
+        .glow {
+            text-shadow: 0 0 8px white;
         }
 
         .nav-bar {
@@ -107,35 +120,79 @@
             content: '\23F3'; /* Hourglass emoji */
         }
 
+        /* Custom Animations */
+        .tab.clicked .executor-icon {
+            animation: pop-and-blast 0.8s ease forwards;
+        }
+
+        .tab.clicked .coming-soon-icon::before {
+            content: '🏗️'; /* Construction emoji */
+            animation: pop-and-blast 0.8s ease forwards;
+        }
+
+        @keyframes pop-and-blast {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(0); }
+        }
+
     </style>
 </head>
 <body>
 
     <!-- Typewriter Welcome Text -->
-    <div class="typewriter-text">Welcome to Sovernetwork!</div>
+    <div class="typewriter-text">Welcome to</div>
+    <div class="sovernet-text glow">SOVERNET</div>
 
     <!-- Navigation Bar -->
     <div class="nav-bar">
         <!-- Executor Tab -->
-        <div class="tab">
-            <a href="exe.html">
+        <div class="tab" onclick="animateExecutor();">
+            <a href="exe.html" class="executor-tab">
                 <span class="tab-icon executor-icon"></span>
                 <span>Executor</span>
             </a>
         </div>
 
         <!-- Coming Soon Tab 1 -->
-        <div class="tab">
+        <div class="tab" onclick="animateComingSoon(this);">
             <span class="tab-icon coming-soon-icon"></span>
             <span>Coming Soon</span>
         </div>
 
         <!-- Coming Soon Tab 2 -->
-        <div class="tab">
+        <div class="tab" onclick="animateComingSoon(this);">
             <span class="tab-icon coming-soon-icon"></span>
             <span>Coming Soon</span>
         </div>
     </div>
+
+    <script>
+        // Typewriter animation complete function
+        document.addEventListener("DOMContentLoaded", function() {
+            const typewriter = document.querySelector('.typewriter-text');
+            typewriter.addEventListener("animationend", () => {
+                typewriter.style.borderRight = "none";
+            });
+        });
+
+        // Function to animate Executor tab and navigate
+        function animateExecutor() {
+            const tab = document.querySelector('.executor-tab');
+            tab.parentElement.classList.add('clicked');
+            setTimeout(() => {
+                window.location.href = "exe.html"; // Redirect after animation
+            }, 800);
+        }
+
+        // Function to animate Coming Soon tabs
+        function animateComingSoon(element) {
+            element.classList.add('clicked');
+            setTimeout(() => {
+                alert("🏗️ Coming Soon! Stay tuned.");
+            }, 800);
+        }
+    </script>
 
 </body>
 </html>
