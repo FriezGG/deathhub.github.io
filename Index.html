@@ -18,19 +18,18 @@
             color: white;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center; /* Center vertically */
             align-items: center;
             height: 100vh;
             overflow: hidden;
             position: relative;
         }
 
-        /* Large Sovernet Text */
+        /* Centered Sovernet Text */
         .sovernet-text {
             font-size: 3.5rem;
             letter-spacing: 5px;
             font-weight: bold;
-            margin-top: 30px;
             text-shadow: 0 0 8px white;
         }
 
@@ -47,6 +46,7 @@
             justify-content: center;
             align-items: center;
             z-index: 10;
+            flex-direction: column;
         }
 
         .emoji {
@@ -58,6 +58,21 @@
             0% { transform: scale(0); opacity: 0; }
             50% { transform: scale(1.2); opacity: 1; }
             100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Teleporting Text */
+        .teleporting-text {
+            font-size: 2rem;
+            color: white;
+            opacity: 0.9;
+            margin-top: 20px;
+            transform: rotate(-15deg); /* Diagonal effect */
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
         .nav-bar {
@@ -137,12 +152,13 @@
 </head>
 <body>
 
-    <!-- SOVERNET Title -->
+    <!-- Centered SOVERNET Title -->
     <div class="sovernet-text">SOVERNET</div>
 
     <!-- Emoji Overlay (Hidden initially) -->
     <div class="emoji-overlay" id="emojiOverlay">
         <!-- Dynamic emoji blast filled here -->
+        <div class="teleporting-text">TELEPORTING...</div>
     </div>
 
     <!-- Navigation Bar -->
@@ -176,6 +192,12 @@
             const overlay = document.getElementById('emojiOverlay');
             overlay.innerHTML = ''; // Clear any existing emojis
             overlay.style.display = 'flex'; // Show the overlay
+
+            // Add TELEPORTING... text and emoji 🌀
+            const teleportingText = document.createElement('div');
+            teleportingText.classList.add('teleporting-text');
+            teleportingText.textContent = 'TELEPORTING...';
+            overlay.appendChild(teleportingText);
 
             // Fill the overlay with emoji 🌀
             for (let i = 0; i < 100; i++) {
