@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Typewriter animation styles */
+        .typewriter-text {
+            font-size: 2rem;
+            margin-top: 30px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid white;
+            width: 0;
+            letter-spacing: 2px;
+            animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: white; }
+        }
+
+        .nav-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            bottom: 0;
+        }
+
+        .tab {
+            text-align: center;
+            flex-grow: 1;
+            padding: 10px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .tab-icon {
+            display: block;
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .tab:hover {
+            transform: scale(1.1);
+        }
+
+        .tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            border: 2px solid white;
+            box-shadow: 0 0 15px white;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        .tab:hover::before {
+            opacity: 1;
+        }
+
+        /* Custom Icons - Replace with images if needed */
+        .executor-icon::before {
+            content: '\1F3AE'; /* Game controller emoji */
+        }
+
+        .coming-soon-icon::before {
+            content: '\23F3'; /* Hourglass emoji */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Typewriter Welcome Text -->
+    <div class="typewriter-text">Welcome to Sovernetwork!</div>
+
+    <!-- Navigation Bar -->
+    <div class="nav-bar">
+        <!-- Executor Tab -->
+        <div class="tab">
+            <a href="exe.html">
+                <span class="tab-icon executor-icon"></span>
+                <span>Executor</span>
+            </a>
+        </div>
+
+        <!-- Coming Soon Tab 1 -->
+        <div class="tab">
+            <span class="tab-icon coming-soon-icon"></span>
+            <span>Coming Soon</span>
+        </div>
+
+        <!-- Coming Soon Tab 2 -->
+        <div class="tab">
+            <span class="tab-icon coming-soon-icon"></span>
+            <span>Coming Soon</span>
+        </div>
+    </div>
+
+</body>
+</html>
