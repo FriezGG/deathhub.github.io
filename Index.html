@@ -136,7 +136,7 @@
         }
 
         .coming-soon-icon::before {
-            content: '\23F3'; /* Hourglass emoji */
+            content: '\1F680'; /* Rocket emoji */
         }
 
         .discord-icon::before {
@@ -168,10 +168,12 @@
             </a>
         </div>
 
-        <!-- Coming Soon Tab 1 -->
-        <div class="tab" onclick="animateOverlay('#');">
-            <span class="tab-icon coming-soon-icon"></span>
-            <span>Coming Soon</span>
+        <!-- Bypass Tab -->
+        <div class="tab" onclick="animateOverlay('bypass.html');">
+            <a href="javascript:void(0)" class="bypass-tab">
+                <span class="tab-icon coming-soon-icon"></span>
+                <span>Bypass</span>
+            </a>
         </div>
 
         <!-- Discord Icon Tab -->
@@ -192,11 +194,7 @@
             // After 3 seconds, hide the overlay and redirect
             setTimeout(() => {
                 overlay.style.display = 'none';
-                if (url !== '#') {
-                    window.location.href = url;
-                } else {
-                    alert("🏗️ Coming Soon! Stay tuned.");
-                }
+                window.location.href = url;
             }, 3000); // 3-second delay before redirect
         }
     </script>
