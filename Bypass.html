@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bypass Website</title>
+    <style>
+        /* Basic styling for layout */
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        #error-message {
+            color: red;
+            display: none;
+            margin-top: 20px;
+        }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+        #key-compartment {
+            display: none;
+            margin-top: 20px;
+        }
+        #copy-btn {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bypass Gateway</h1>
+
+    <input type="text" id="fluxus-url" placeholder="Enter Fluxus or Delta URL" style="width: 300px; padding: 10px;">
+
+    <button onclick="processBypass()">Submit</button>
+
+    <div id="overlay">Bypassing... Please wait.</div>
+
+    <div id="key-compartment">
+        <p>Key: <span id="key"></span></p>
+        <button id="copy-btn" onclick="copyKey()">Copy Key</button>
+    </div>
+
+    <p id="error-message">Unsupported URL or error occurred!</p>
+
+    <script>
+        function processBypass() {
+            const url = document.getElementById('fluxus-url').value;
+            const fluxusPattern = /https:\/\/flux\.li\/android\/external\/start\.php\?HWID=/;
+            const deltaPattern = /https:\/\/gateway\.platoboost\.com\/a\/8\?id=/;
+
+            let hwid, apiUrl;
+            const errorMessage = document.getElementById('error-message');
+
+            // Check if the URL matches Fluxus
+            if (fluxusPattern.test(url)) {
+                hwid = url.replace('https://flux.li/android/external/start.php?HWID=', '');
+                apiUrl = `https://stickx.top/api-fluxus/?hwid=${hwid}&api_key=E99l9NOctud3vmu6bPne`;
+            }
+            // Check if the URL matches Delta
+            else if (deltaPattern.test(url)) {
+                hwid = url.replace('https://gateway.platoboost.com/a/8?id=', '');
+                apiUrl = `https://stickx.top/api-delta/?hwid=${hwid}&api_key=E99l9NOctud3vmu6bPne`;
+            }
+            // If the URL doesn't match any pattern, show an error
+            else {
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Hide the error message and show the overlay
+            errorMessage.style.display = 'none';
+            document.getElementById('overlay').style.display = 'flex';
+
+            // Fetch the key from the API
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Ensure we only get the "key" from the response
+                    if (data && data.key) {
+                        document.getElementById('overlay').style.display = 'none';
+                        document.getElementById('key-compartment').style.display = 'block';
+                        document.getElementById('key').innerText = data.key;  // Display the key
+                    } else {
+                        throw new Error('Key not found');
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('overlay').style.display = 'none';
+                    errorMessage.style.display = 'block';
+                    errorMessage.innerText = 'Error: ' + error.message;
+                });
+        }
+
+        function copyKey() {
+            const key = document.getElementById('key').innerText;
+            navigator.clipboard.writeText(key).then(() => {
+                alert("Key copied to clipboard");
+            }).catch(err => {
+                alert("Failed to copy key: " + err);
+            });
+        }
+    </script>
+
+</body>
+</html>
