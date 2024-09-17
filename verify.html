@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff4e50, #1cb5e0);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .captcha-container, .verify-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.5s ease;
+        }
+
+        /* Captcha Styling */
+        .captcha-container {
+            opacity: 1;
+        }
+
+        .verify-container {
+            opacity: 0;
+        }
+
+        .captcha {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .verify-button {
+            border: 2px solid white;
+            padding: 10px 40px;
+            border-radius: 50px;
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .verify-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* Overlay for Teleport Gateway */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            flex-direction: column;
+        }
+
+        .overlay-text {
+            font-size: 2rem;
+            color: white;
+            animation: typewriter 2s steps(20, end) 1 normal both, blink 0.75s step-end infinite;
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            from { border-color: white; }
+            to { border-color: transparent; }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Captcha Section -->
+    <div class="captcha-container" id="captcha-container">
+        <div class="captcha">
+            <!-- Your CAPTCHA here -->
+            <p>Prove you're human! Please complete the CAPTCHA:</p>
+            <input type="checkbox" id="captcha-check"> I am not a robot
+        </div>
+        <button onclick="submitCaptcha()" class="verify-button">Submit CAPTCHA</button>
+    </div>
+
+    <!-- Verify Button Section -->
+    <div class="verify-container" id="verify-container">
+        <button class="verify-button" onclick="animateOverlay()">Verify</button>
+    </div>
+
+    <!-- Overlay for Teleport Gateway -->
+    <div class="overlay" id="overlay">
+        <div class="overlay-text">Opening Teleport Gateway...</div>
+    </div>
+
+    <script>
+        // Captcha Submission Function
+        function submitCaptcha() {
+            const captchaChecked = document.getElementById('captcha-check').checked;
+            if (captchaChecked) {
+                // Fade out the captcha container
+                document.getElementById('captcha-container').style.opacity = '0';
+
+                // After fade out, show verify container
+                setTimeout(() => {
+                    document.getElementById('captcha-container').style.display = 'none';
+                    document.getElementById('verify-container').style.opacity = '1';
+                }, 1500);
+            } else {
+                alert('Please complete the CAPTCHA!');
+            }
+        }
+
+        // Function to show overlay and teleport gateway animation
+        function animateOverlay() {
+            const overlay = document.getElementById('overlay');
+            overlay.style.display = 'flex'; // Show the overlay
+
+            // After 3 seconds, redirect to target page
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                window.location.href = '#'; // Replace with the actual target URL
+            }, 3000); // 3-second delay before redirect
+        }
+    </script>
+</body>
+</html>
