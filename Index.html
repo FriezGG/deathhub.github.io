@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Protected</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #6a11cb, #2575fc); /* Bluish and Purple Gradient */
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        input[type="password"] {
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid white;
+            border-radius: 5px;
+            background-color: transparent;
+            color: white;
+            outline: none;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Button Design */
+        .btn {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            color: white;
+            border: 2px solid white;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+    </style>
+    <script>
+        async function checkPassword() {
+            const password = document.getElementById('password').value;
+            const passwordUrl = "https://raw.githubusercontent.com/DeveloperPrajwalYT/deathhub.github.io/refs/heads/main/pass";
+
+            try {
+                const response = await fetch(passwordUrl);
+                const correctPassword = await response.text();
+
+                if (password.trim() === correctPassword.trim()) {
+                    window.location.href = "protected.html";
+                } else {
+                    document.getElementById('error').textContent = "Incorrect password. Try again.";
+                }
+            } catch (error) {
+                document.getElementById('error').textContent = "Error fetching the password. Try again later.";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Enter Password to Continue</h1>
+        <input type="password" id="password" placeholder="Enter password">
+        <br>
+        <button class="btn" onclick="checkPassword()">Continue</button>
+        <div id="error" class="error"></div>
+    </div>
+
+</body>
+</html>
