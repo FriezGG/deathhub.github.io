@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introverted69</title>
+    <title>Welcome to Prajwal's World</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -14,162 +14,131 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #1a1a1a;
+            background-color: black;
             color: white;
-            overflow-x: hidden;
-        }
-
-        /* Rainfall Background */
-        .rain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .raindrop {
-            position: absolute;
-            bottom: 100%;
-            width: 1px;
-            height: 60px;
-            background-color: white;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(120vh);
-            }
-        }
-
-        /* Container for the main content */
-        .container {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            text-align: center;
-            opacity: 0;
-            animation: fadeIn 3s forwards; /* Fade-in animation */
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Panel with image */
-        .intro-panel {
             position: relative;
-            width: 300px;
-            height: 400px;
-            background-color: rgba(40, 40, 40, 0.9);
-            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            transition: transform 0.5s ease;
         }
 
-        .intro-panel:hover {
-            transform: scale(1.05);
-        }
-
-        .intro-panel img {
+        /* Rainfall animation background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: auto;
+            height: 100%;
+            background: url('https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif') repeat;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* Centralized Panel */
+        .panel {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 15px white;
+            animation: fadeIn 2s ease-in-out forwards;
+        }
+
+        /* Panel photo */
+        .panel img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            animation: slideIn 2s ease-in-out forwards;
+        }
+
+        /* Custom Button */
+        .play-btn {
+            margin-top: 20px;
+            padding: 10px 30px;
+            font-size: 1.2rem;
+            color: white;
+            border: 2px solid white;
+            border-radius: 30px; /* Smooth edges */
+            background: rgba(255, 255, 255, 0.1); /* Translucent inside */
+            cursor: pointer;
+            transition: 0.3s;
+            animation: bounce 2s infinite alternate;
+        }
+
+        .play-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Slightly more solid on hover */
+            color: black;
+        }
+
+        /* Scroll section */
+        .scroll-section {
+            display: none;
+            padding: 20px;
+            text-align: center;
+            animation: fadeIn 2s forwards;
         }
 
         .attributes {
-            margin-top: 50px;
-            opacity: 0;
-            animation: fadeIn 1s forwards 2.5s; /* Fade-in after delay */
-        }
-
-        .attributes p {
-            margin: 10px 0;
             font-size: 1.2rem;
+            margin-bottom: 10px;
+            line-height: 2;
         }
 
-        /* Button to scroll */
-        .scroll-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            border: 2px solid white;
-            background: transparent;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.3s;
+        /* Keyframes for animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
-        .scroll-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+        @keyframes slideIn {
+            0% { transform: translateY(-50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
         }
 
     </style>
 </head>
 <body>
 
-    <!-- Rainfall animation -->
-    <div class="rain"></div>
+    <!-- Audio for Rickroll -->
+    <audio autoplay loop>
+        <source src="https://youtu.be/dQw4w9WgXcQ?si=VoOTs6zWfYgMCaqv" type="audio/mpeg">
+    </audio>
 
-    <!-- Main content container -->
-    <div class="container">
-        <!-- Panel with an image (your photo) -->
-        <div class="intro-panel" onclick="scrollDown()">
-            <img src="https://cdn.discordapp.com/attachments/1285142170843615263/1286103819570122824/FB_IMG_1721095257522_1726699902374.jpg?ex=66ecb105&is=66eb5f85&hm=5338b1dc2e594bfe69abca68d915bdfe4aa4bafc84559f5c1a246192af3655ee&" alt="Profile Image">
-        </div>
-
-        <!-- Hidden attributes section -->
-        <div class="attributes" id="attributes">
-            <p>Name: Prajwal</p>
-            <p>Age: 15</p>
-            <p>Class: 8</p>
-            <p>Frontend Developer</p>
-        </div>
-
-        <!-- Scroll button -->
-        <button class="scroll-button" onclick="scrollDown()">Scroll Down</button>
+    <!-- Introduction Panel -->
+    <div class="panel">
+        <img src="https://cdn.discordapp.com/attachments/1285142170843615263/1286103819570122824/FB_IMG_1721095257522_1726699902374.jpg?ex=66ecb105&is=66eb5f85&hm=5338b1dc2e594bfe69abca68d915bdfe4aa4bafc84559f5c1a246192af3655ee&" alt="Prajwal's Photo">
+        <h1>Welcome to Prajwal's World</h1>
+        <button class="play-btn" onclick="scrollToAttributes()">Play A Game</button>
     </div>
 
-    <!-- Background music: Rickroll (plays after 3 seconds) -->
-    <audio id="rickroll" src="https://youtu.be/dQw4w9WgXcQ?si=VoOTs6zWfYgMCaqv"></audio>
+    <!-- Scroll to Attributes Section -->
+    <div class="scroll-section" id="attributes">
+        <div class="attributes">Frontend Developer</div>
+        <div class="attributes">Studies in Grade 8</div>
+        <div class="attributes">Age: 15</div>
+        <!-- Add more attributes here -->
+    </div>
 
     <script>
-        // Rainfall animation
-        function createRaindrop() {
-            const rain = document.querySelector('.rain');
-            const raindrop = document.createElement('div');
-            raindrop.classList.add('raindrop');
-            raindrop.style.left = `${Math.random() * 100}vw`;
-            raindrop.style.animationDuration = `${Math.random() * 2 + 2}s`;
-            rain.appendChild(raindrop);
-
+        function scrollToAttributes() {
+            document.querySelector('.scroll-section').style.display = 'block';
+            document.querySelector('.panel').style.display = 'none';
             setTimeout(() => {
-                raindrop.remove();
-            }, 4000);
-        }
-
-        setInterval(createRaindrop, 100);
-
-        // Play Rickroll after 3 seconds
-        setTimeout(() => {
-            const rickrollAudio = document.getElementById('rickroll');
-            rickrollAudio.play();
-        }, 3000);
-
-        // Scroll down to reveal attributes
-        function scrollDown() {
-            document.getElementById('attributes').scrollIntoView({ behavior: 'smooth' });
+                window.location.href = 'x/x/game/love.html'; // Redirect to game page
+            }, 3000); // Wait 3 seconds before redirect
         }
     </script>
+    
 </body>
 </html>
