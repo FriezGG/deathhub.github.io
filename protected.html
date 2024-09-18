@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: black;
+            background-image: linear-gradient(to bottom, #3498db, #2ecc71); /* Gradient background */
             color: white;
             display: flex;
             flex-direction: column;
@@ -31,28 +31,19 @@
             letter-spacing: 5px;
             font-weight: bold;
             text-shadow: 0 0 8px white;
+            margin-bottom: 20px; /* Add margin to separate from choose destination text */
         }
 
-        /* Typewriter Text */
-        .typewriter-text {
+        /* Choose Destination Text */
+        .choose-destination-text {
             font-size: 1.5rem;
             letter-spacing: 2px;
-            margin-top: 10px;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 2px solid white;
-            animation: typewriter 3s steps(30, end) 1s 1 normal both,
-                       blink 0.75s step-end infinite;
+            opacity: 0; /* Initial opacity 0 for fade-in effect */
+            animation: fadeIn 2s forwards; /* Fade-in animation */
         }
 
-        @keyframes typewriter {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink {
-            from { border-color: white; }
-            to { border-color: transparent; }
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
 
         /* Overlay for darkening the screen during animation */
@@ -73,8 +64,12 @@
         .overlay-text {
             font-size: 2rem;
             color: white;
-            animation: typewriter 2s steps(20, end) 1 normal both,
-                       blink 0.75s step-end infinite;
+            opacity: 0; /* Initial opacity 0 for fade-in effect */
+            animation: fadeIn 2s forwards, fadeOut 2s 2s forwards; /* Fade-in and fade-out animation */
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; }
         }
 
         .nav-bar {
@@ -95,6 +90,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
+            background-color: rgba(255, 255, 255, 0.2); /* Translucent background with white tint */
+            border: 2px solid white; /* White outline */
         }
 
         .tab a {
@@ -142,18 +139,15 @@
         .discord-icon::before {
             content: '\1F5E8'; /* Speech balloon emoji representing Discord */
         }
-
     </style>
 </head>
 <body>
 
-    <!-- Centered SOVERNET Title -->
+    <!-- Centered SOVERNET Title and Choose Destination Text -->
     <div class="sovernet-text">SOVERNET</div>
+    <div class="choose-destination-text">Choose your destination</div>
 
-    <!-- Typewriter text under Sovernet title -->
-    <div class="typewriter-text">Choose your destination</div>
-
-    <!-- Dark overlay with typewriter text for Teleport Gateway -->
+    <!-- Dark overlay with fade-in text for Teleport Gateway -->
     <div class="overlay" id="overlay">
         <div class="overlay-text">Opening Teleport Gateway</div>
     </div>
@@ -199,5 +193,13 @@
         }
     </script>
 
+    <!-- Add parallax effect to background -->
+    <script>
+        document.body.addEventListener('mousemove', (e) => {
+            const x = e.clientX / 100;
+            const y = e.clientY / 100;
+            document.body.style.backgroundPosition = `${x}px ${y}px`;
+        });
+    </script>
 </body>
 </html>
