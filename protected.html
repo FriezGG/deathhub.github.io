@@ -20,8 +20,7 @@
             display: flex;
             justify-content: center; /* Center horizontally */
             align-items: center;     /* Center vertically */
-            position: relative;
-            overflow: hidden;
+            flex-direction: column;  /* Stack Sovernet and Choose your... */
         }
 
         /* Centered SOVERNET Text */
@@ -30,8 +29,6 @@
             letter-spacing: 5px;
             font-weight: bold;
             text-shadow: 0 0 8px white;
-            opacity: 0;
-            animation: fadeIn 2s forwards;
         }
 
         /* Fading in for "Choose your destination" text */
@@ -40,98 +37,12 @@
             letter-spacing: 2px;
             margin-top: 20px;
             opacity: 0;
-            animation: fadeIn 4s forwards 1s;
+            animation: fadeIn 3s forwards 1s;
         }
 
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
-        }
-
-        /* Overlay for darkening the screen during animation */
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            flex-direction: column;
-        }
-
-        .overlay-text {
-            font-size: 2rem;
-            color: white;
-        }
-
-        .nav-bar {
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            padding: 20px;
-            position: fixed;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
-        .tab {
-            text-align: center;
-            flex-grow: 1;
-            padding: 10px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .tab a {
-            text-decoration: none;
-            color: white;
-        }
-
-        .tab-icon {
-            display: block;
-            font-size: 30px;
-            margin-bottom: 5px;
-        }
-
-        .tab:hover {
-            transform: scale(1.1);
-        }
-
-        .tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 10px;
-            border: 2px solid white;
-            box-shadow: 0 0 15px white;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-
-        .tab:hover::before {
-            opacity: 1;
-        }
-
-        /* Custom Icons */
-        .executor-icon::before {
-            content: '\1F3AE'; /* Game controller emoji */
-        }
-
-        .coming-soon-icon::before {
-            content: '\1F680'; /* Rocket emoji */
-        }
-
-        .discord-icon::before {
-            content: '\1F5E8'; /* Speech balloon emoji */
         }
 
     </style>
@@ -143,52 +54,6 @@
 
     <!-- Fade-in "Choose your destination" text -->
     <div class="fade-text">Choose your destination</div>
-
-    <!-- Dark overlay with typewriter text for Teleport Gateway -->
-    <div class="overlay" id="overlay">
-        <div class="overlay-text">Opening Teleport Gateway</div>
-    </div>
-
-    <!-- Navigation Bar -->
-    <div class="nav-bar">
-        <!-- Executor Tab -->
-        <div class="tab" onclick="animateOverlay('exe.html');">
-            <a href="javascript:void(0)" class="executor-tab">
-                <span class="tab-icon executor-icon"></span>
-                <span>Executor</span>
-            </a>
-        </div>
-
-        <!-- Bypass Tab -->
-        <div class="tab" onclick="animateOverlay('bypass.html');">
-            <a href="javascript:void(0)" class="bypass-tab">
-                <span class="tab-icon coming-soon-icon"></span>
-                <span>Bypass</span>
-            </a>
-        </div>
-
-        <!-- Discord Icon Tab -->
-        <div class="tab" onclick="animateOverlay('https://discord.gg/hyxdeathontop');">
-            <a href="javascript:void(0)" class="discord-tab">
-                <span class="tab-icon discord-icon"></span>
-                <span>Discord</span>
-            </a>
-        </div>
-    </div>
-
-    <script>
-        // Function to show overlay and redirect after animation
-        function animateOverlay(url) {
-            const overlay = document.getElementById('overlay');
-            overlay.style.display = 'flex'; // Show the overlay
-
-            // After 3 seconds, hide the overlay and redirect
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                window.location.href = url;
-            }, 3000); // 3-second delay before redirect
-        }
-    </script>
 
 </body>
 </html>
