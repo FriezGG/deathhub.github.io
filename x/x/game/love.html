@@ -1,1 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do You Love Me?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Glowing text */
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+            text-shadow: 0 0 20px white, 0 0 30px white;
+        }
+
+        /* Custom button styling */
+        .button {
+            margin: 20px;
+            padding: 10px 30px;
+            font-size: 1.5rem;
+            color: white;
+            border: 2px solid white;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        #noBtn {
+            position: absolute;
+        }
+
+        /* Love message that appears when "Yes" is clicked */
+        #loveMessage {
+            display: none;
+            font-size: 2rem;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>DO YOU LOVE ME?</h1>
+
+    <!-- Yes Button -->
+    <button class="button" id="yesBtn" onclick="loveMessage()">Yes</button>
+
+    <!-- No Button -->
+    <button class="button" id="noBtn" onclick="moveNoButton()">No</button>
+
+    <!-- Message for "Yes" -->
+    <div id="loveMessage">I also Love you!!</div>
+
+    <script>
+        // When Yes is clicked, display the love message
+        function loveMessage() {
+            document.getElementById("loveMessage").style.display = "block";
+            document.getElementById("yesBtn").style.display = "none";
+            document.getElementById("noBtn").style.display = "none";
+        }
+
+        // When No is clicked, move the No button to a random position
+        function moveNoButton() {
+            const noBtn = document.getElementById("noBtn");
+            const maxWidth = window.innerWidth - noBtn.offsetWidth;
+            const maxHeight = window.innerHeight - noBtn.offsetHeight;
+
+            // Generate random positions
+            const randomX = Math.floor(Math.random() * maxWidth);
+            const randomY = Math.floor(Math.random() * maxHeight);
+
+            // Move the No button to the new random position
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+    </script>
+
+</body>
+</html>
