@@ -16,6 +16,8 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            opacity: 0; /* Initial opacity 0 for fade-in effect */
+            animation: fadeIn 2s forwards; /* Fade-in animation */
         }
         h1 {
             margin-bottom: 20px;
@@ -45,15 +47,50 @@
             margin-left: 10px;
             cursor: pointer;
         }
+        .btn {
+            padding: 15px 25px;
+            font-size: 1.2rem;
+            color: white;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            transition: transform 0.5s ease;
+            z-index: 1;
+        }
+        .btn:hover::before {
+            transform: scale(2);
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body>
 
     <h1>Bypass Gateway</h1>
 
-    <input type="text" id="fluxus-url" placeholder="Enter Fluxus or Delta URL" style="width: 300px; padding: 10px;">
+    <input type="text" id="fluxus-url" placeholder="Enter URL" style="width: 300px; padding: 10px;">
 
-    <button onclick="processBypass()">Submit</button>
+    <button class="btn" onclick="processBypass()">Submit</button>
 
     <div id="overlay">Bypassing... Please wait.</div>
 
@@ -69,6 +106,12 @@
             const url = document.getElementById('fluxus-url').value;
             const fluxusPattern = /https:\/\/flux\.li\/android\/external\/start\.php\?HWID=/;
             const deltaPattern = /https:\/\/gateway\.platoboost\.com\/a\/8\?id=/;
+            const codexPattern = /https:\/\/codex\.li\/android\/external\/start\.php\?HWID=/;
+            const arceusXPattern = /https:\/\/arceusx\.li\/android\/external\/start\.php\?HWID=/;
+            const crypticPattern = /https:\/\/cryptic\.li\/android\/external\/start\.php\?HWID=/;
+            const trigonevo6hrPattern = /https:\/\/trigonevo\.fun\/whitelist\/6h_start\.php\?HWID=/;
+            const trigonevo12hrPattern = /https:\/\/trigonevo\.fun\/whitelist\/12h_start\.php\?HWID=/;
+            const trigonevo24hrPattern = /https:\/\/trigonevo\.fun\/whitelist\/24h_start\.php\?HWID=/;
 
             let hwid, apiUrl;
             const errorMessage = document.getElementById('error-message');
@@ -83,45 +126,24 @@
                 hwid = url.replace('https://gateway.platoboost.com/a/8?id=', '');
                 apiUrl = `https://stickx.top/api-delta/?hwid=${hwid}&api_key=E99l9NOctud3vmu6bPne`;
             }
-            // If the URL doesn't match any pattern, show an error
-            else {
-                errorMessage.style.display = 'block';
-                return;
+            // Check if the URL matches Codex
+            else if (codexPattern.test(url)) {
+                hwid = url.replace('https://codex.li/android/external/start.php?HWID=', '');
+                apiUrl = `https://stickx.top/api-codex/?hwid=${hwid}&api_key=E99l9NOctud3vmu6bPne`;
             }
-
-            // Hide the error message and show the overlay
-            errorMessage.style.display = 'none';
-            document.getElementById('overlay').style.display = 'flex';
-
-            // Fetch the key from the API
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    // Ensure we only get the "key" from the response
-                    if (data && data.key) {
-                        document.getElementById('overlay').style.display = 'none';
-                        document.getElementById('key-compartment').style.display = 'block';
-                        document.getElementById('key').innerText = data.key;  // Display the key
-                    } else {
-                        throw new Error('Key not found');
-                    }
-                })
-                .catch(error => {
-                    document.getElementById('overlay').style.display = 'none';
-                    errorMessage.style.display = 'block';
-                    errorMessage.innerText = 'Error: ' + error.message;
-                });
-        }
-
-        function copyKey() {
-            const key = document.getElementById('key').innerText;
-            navigator.clipboard.writeText(key).then(() => {
-                alert("Key copied to clipboard");
-            }).catch(err => {
-                alert("Failed to copy key: " + err);
-            });
-        }
-    </script>
-
-</body>
-</html>
+            // Check if the URL matches Arceus X
+            else if (arceusXPattern.test(url)) {
+                hwid = url.replace('https://arceusx.li/android/external/start.php?HWID=', '');
+                apiUrl = `https://stickx.top/api-arceusx/?hwid=${hwid}&api_key=E99l9NOctud3vmu6bPne`;
+            }
+            // Check if the URL matches Cryptic
+            else if (crypticPattern.test(url)) {
+                hwid = url.replace('https://cryptic.li/android/external/start.php?HWID=', '');
+                apiUrl = `https://stickx.top/api-cryptic/?hwid=${hwid}&api_key=E99l9NOctud3vmu6bPne`;
+            }
+            // Check if the URL matches Trigonevo 6hr
+            else if (trigonevo6hrPattern.test(url)) {
+                hwid = url.replace('https://trigonevo.fun/whitelist/6h_start.php?HWID=', '');
+                apiUrl = `https://stickx.top/api-trigonevo/?hwid=${hwid}&api_key=E99l9NOctud3vmu6bPne&duration=6`;
+            }
+           
