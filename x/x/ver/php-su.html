@@ -38,12 +38,26 @@
                 opacity: 100;
             }
         }
-
     </style>
+
+    <script>
+        // Show popup message after page loads
+        window.onload = function() {
+            setTimeout(() => {
+                const userConfirmed = confirm("Successfully Verified. You will be redirected to our sponsor now | You may close this tab.");
+                if (userConfirmed) {
+                    // Redirect to the sponsor link after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = "https://rbxplus.com/ref/wleh5mzm";
+                    }, 2000);
+                }
+            }, 500); // Delay to simulate popup appearing smoothly after load
+        };
+    </script>
 </head>
 <body>
 
     <div class="success-text">Success. Now you may close this tab.</div>
 
 </body>
-</html>
+    </html>
