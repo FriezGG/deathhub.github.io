@@ -19,8 +19,8 @@
             justify-content: center;
             align-items: center;
             background: linear-gradient(135deg, #6e45e2, #88d3ce);
-            opacity: 0; /* Initial opacity 0 for fade-in effect */
-            animation: fadeIn 2s forwards; /* Fade-in animation */
+            opacity: 0;
+            animation: fadeIn 2s forwards;
         }
 
         .container {
@@ -83,7 +83,6 @@
             position: relative;
         }
 
-        /* Overlay for darkening the screen during animation */
         .overlay {
             position: absolute;
             top: 0;
@@ -101,8 +100,8 @@
         .overlay-text {
             font-size: 2rem;
             color: white;
-            opacity: 0; /* Initial opacity 0 for fade-in effect */
-            animation: fadeIn 2s forwards, fadeOut 2s 2s forwards; /* Fade-in and fade-out animation */
+            opacity: 0;
+            animation: fadeIn 2s forwards, fadeOut 2s 2s forwards;
         }
 
         @keyframes fadeIn {
@@ -121,26 +120,31 @@
     <div class="container">
         <h1>Select an executor!</h1>
         <div class="buttons-container">
-            <button class="btn"><a href="https://stickx.top/extension/Cryptic642.apk" target="_blank">Cryptic [LATEST]</a></button>
-            <button class="btn"><a href="https://stickx.top/extension/fluxus642.apk" target="_blank">Fluxus [LATEST]</a></button>
-            <button class="btn"><a href="https://stickx.top/extension/Delta642.apk" target="_blank">Delta [LATEST]</a></button>
-            <button class="btn"><a href="https://stickx.top/extension/Codex642.apk" target="_blank">CodeX [LATEST]</a></button>
-            <button class="btn"><a href="https://stickx.top/extension/ArceusX143.apk" target="_blank">ArceusXNeo[LATEST]</a></button>
+            <button class="btn"><a href="#" id="crypticLink">Cryptic [LATEST]</a></button>
+            <button class="btn"><a href="#" id="fluxusLink">Fluxus [LATEST]</a></button>
+            <button class="btn"><a href="#" id="deltaLink">Delta [LATEST]</a></button>
+            <button class="btn"><a href="#" id="codexLink">CodeX [LATEST]</a></button>
+            <button class="btn"><a href="#" id="arceusLink">ArceusXNeo[LATEST]</a></button>
         </div>
     </div>
 
     <script>
-        // Function to show overlay and redirect after animation
-        function animateOverlay(url) {
-            const overlay = document.getElementById('overlay');
-            overlay.style.display = 'flex'; // Show the overlay
+        // Define version variables
+        const crypticVersion = "Cryptic642";
+        const fluxusVersion = "fluxus642";
+        const deltaVersion = "Delta642";
+        const codexVersion = "Codex642";
+        const arceusXVersion = "ArceusX143";
 
-            // After 3 seconds, hide the overlay and redirect
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                window.location.href = url;
-            }, 3000); // 3-second delay before redirect
-        }
+        // Base URL
+        const baseUrl = "https://stickx.top/extension/";
+
+        // Update the links dynamically
+        document.getElementById('crypticLink').href = `${baseUrl}${crypticVersion}.apk`;
+        document.getElementById('fluxusLink').href = `${baseUrl}${fluxusVersion}.apk`;
+        document.getElementById('deltaLink').href = `${baseUrl}${deltaVersion}.apk`;
+        document.getElementById('codexLink').href = `${baseUrl}${codexVersion}.apk`;
+        document.getElementById('arceusLink').href = `${baseUrl}${arceusXVersion}.apk`;
     </script>
 </body>
 </html>
