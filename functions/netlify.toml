@@ -1,0 +1,7 @@
+[build]
+  functions = "functions"
+
+[[redirects]]
+  from = "/get-app"
+  to = "/.netlify/functions/get-app"
+  status = 200
