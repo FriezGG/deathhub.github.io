@@ -38,12 +38,10 @@
             align-items: center;
             font-size: 24px;
         }
-        #key-compartment {
+        #key-display {
             display: none;
             margin-top: 20px;
-        }
-        #key {
-            font-size: 2rem;
+            font-size: 3rem; /* Large font size for the key */
             color: lime;
         }
         .btn {
@@ -92,9 +90,7 @@
 
     <div id="overlay">Bypassing... Please wait.</div>
 
-    <div id="key-compartment">
-        <p>Key: <span id="key"></span></p>
-    </div>
+    <div id="key-display"></div> <!-- Key display element -->
 
     <p id="error-message">Unsupported URL or error occurred!</p>
 
@@ -109,11 +105,10 @@
 
             const errorMessage = document.getElementById('error-message');
             const overlay = document.getElementById('overlay');
-            const keyCompartment = document.getElementById('key-compartment');
-            const keyDisplay = document.getElementById('key');
+            const keyDisplay = document.getElementById('key-display');
 
             errorMessage.style.display = 'none';
-            keyCompartment.style.display = 'none';
+            keyDisplay.style.display = 'none';
             overlay.style.display = 'flex';
 
             let apiUrl;
@@ -145,16 +140,16 @@
                 .then(data => {
                     overlay.style.display = 'none';
                     if (data.key) {
-                        keyDisplay.textContent = data.key;
-                        keyCompartment.style.display = 'block';
+                        keyDisplay.textContent = data.key; // Display the extracted key
+                        keyDisplay.style.display = 'block'; // Show the key display
                     } else {
-                        errorMessage.textContent = "Unable to bypass!";
+                        errorMessage.textContent = "Unable to bypass!"; // Error if key not found
                         errorMessage.style.display = 'block';
                     }
                 })
                 .catch(() => {
                     overlay.style.display = 'none';
-                    errorMessage.textContent = "Unsupported URL or error occurred!";
+                    errorMessage.textContent = "Unsupported URL or error occurred!"; // General error
                     errorMessage.style.display = 'block';
                 });
         }
