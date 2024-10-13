@@ -6,91 +6,76 @@
     <title>Bypass Gateway</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
             background-color: black;
             color: white;
             font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
+            margin: 0;
         }
-
-        .container {
-            text-align: center;
-        }
-
         h1 {
-            font-size: 3rem;
+            font-size: 36px;
             margin-bottom: 20px;
         }
-
         .input-container {
             display: flex;
-            justify-content: center;
+            align-items: center;
             margin-bottom: 20px;
         }
-
         input[type="text"] {
-            width: 300px;
             padding: 10px;
+            font-size: 18px;
+            width: 300px;
             border: none;
             border-radius: 5px;
-            font-size: 1rem;
-            margin-right: 10px;
         }
-
         button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 18px;
             background-color: #4CAF50;
             color: white;
-            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
+            margin-left: 10px;
         }
-
         button:hover {
             background-color: #45a049;
         }
-
-        .result {
-            font-size: 2rem;
+        .key-display {
+            font-size: 24px;
             margin-top: 20px;
+            color: #FFD700; /* Gold color for the key */
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Bypass Gateway</h1>
-        <div class="input-container">
-            <input type="text" id="urlInput" placeholder="Enter your link here...">
-            <button id="submitButton">Submit</button>
-        </div>
-        <div id="result" class="result">
-            <!-- The result will be displayed here -->
-        </div>
+    <h1>Bypass Gateway</h1>
+    <div class="input-container">
+        <input type="text" id="urlInput" placeholder="Enter your link here...">
+        <button id="submitBtn">Submit</button>
     </div>
+    <div class="key-display" id="keyDisplay"></div>
+
     <script>
-        document.getElementById("submitButton").addEventListener("click", async () => {
+        document.getElementById("submitBtn").addEventListener("click", function() {
             const url = document.getElementById("urlInput").value;
-            const apiKey = "spedxforfriez"; // Your API key
+            const apiKey = "spedxforfriez";
             const apiUrl = `http://luna.pylex.xyz:10234/api/bypass?url=${encodeURIComponent(url)}&api_key=${apiKey}`;
             
-            try {
-                const response = await fetch(apiUrl);
-                const data = await response.json();
-
-                // Check if 'key' exists in the response
-                if (data.key) {
-                    document.getElementById("result").innerText = `Key: ${data.key}`;
-                } else {
-                    document.getElementById("result").innerText = "Unable To Retrieve Key";
-                }
-            } catch (error) {
-                document.getElementById("result").innerText = "Unable To Retrieve Key";
-            }
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const key = data.key || "Key not found"; // Handle case where key doesn't exist
+                    document.getElementById("keyDisplay").innerText = key;
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    document.getElementById("keyDisplay").innerText = "Error fetching key.";
+                });
         });
     </script>
 </body>
