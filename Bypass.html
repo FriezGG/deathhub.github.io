@@ -6,104 +6,92 @@
     <title>Bypass Gateway</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
             background-color: black;
             color: white;
             font-family: Arial, sans-serif;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
-            margin: 0;
         }
+
+        .container {
+            text-align: center;
+        }
+
         h1 {
-            font-size: 48px;
+            font-size: 3rem;
             margin-bottom: 20px;
         }
+
         .input-container {
             display: flex;
-            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
         }
+
         input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid white;
-            border-radius: 5px;
             width: 300px;
-            margin-right: 10px;
-            background-color: #333;
-            color: white;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: white;
-            background-color: #007BFF;
+            padding: 10px;
             border: none;
             border-radius: 5px;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1rem;
             cursor: pointer;
         }
+
         button:hover {
-            background-color: #0056b3;
+            background-color: #45a049;
         }
+
         .result {
+            font-size: 2rem;
             margin-top: 20px;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .error {
-            color: red;
-        }
-        .loading {
-            font-size: 20px;
-            color: yellow;
         }
     </style>
 </head>
 <body>
-
-    <h1>Bypass Gateway</h1>
-    <div class="input-container">
-        <input type="text" id="urlInput" placeholder="Enter your link here">
-        <button id="submitButton">Submit</button>
+    <div class="container">
+        <h1>Bypass Gateway</h1>
+        <div class="input-container">
+            <input type="text" id="urlInput" placeholder="Enter your link here...">
+            <button id="submitButton">Submit</button>
+        </div>
+        <div id="result" class="result">
+            <!-- The result will be displayed here -->
+        </div>
     </div>
-    <div class="result" id="resultDisplay"></div>
-
     <script>
-        document.getElementById('submitButton').addEventListener('click', async () => {
-            const url = document.getElementById('urlInput').value;
-            const apiUrl = `http://luna.pylex.xyz:10234/api/bypass?url=${encodeURIComponent(url)}&api_key=spedxforfriez`;
-            const resultDisplay = document.getElementById('resultDisplay');
-
-            // Show loading message
-            resultDisplay.textContent = 'Loading...';
-            resultDisplay.classList.remove('error');
-
+        document.getElementById("submitButton").addEventListener("click", async () => {
+            const url = document.getElementById("urlInput").value;
+            const apiKey = "spedxforfriez"; // Your API key
+            const apiUrl = `http://luna.pylex.xyz:10234/api/bypass?url=${encodeURIComponent(url)}&api_key=${apiKey}`;
+            
             try {
                 const response = await fetch(apiUrl);
-                
-                // Ensure we get a successful response
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                
                 const data = await response.json();
 
-                // Extract 'key' from the response
+                // Check if 'key' exists in the response
                 if (data.key) {
-                    resultDisplay.textContent = `Key: ${data.key}`;
-                    resultDisplay.classList.remove('error');
+                    document.getElementById("result").innerText = `Key: ${data.key}`;
                 } else {
-                    resultDisplay.textContent = 'Unable To Retrieve Key';
-                    resultDisplay.classList.add('error');
+                    document.getElementById("result").innerText = "Unable To Retrieve Key";
                 }
             } catch (error) {
-                // Handle any errors, including those from network issues or if key is not present
-                resultDisplay.textContent = 'Unable To Retrieve Key';
-                resultDisplay.classList.add('error');
+                document.getElementById("result").innerText = "Unable To Retrieve Key";
             }
         });
     </script>
-
 </body>
 </html>
