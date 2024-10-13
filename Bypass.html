@@ -11,142 +11,82 @@
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             height: 100vh;
             margin: 0;
-            opacity: 0;
-            animation: fadeIn 2s forwards;
         }
         h1 {
+            font-size: 48px;
             margin-bottom: 20px;
         }
-        #overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
+        .input-container {
+            display: flex;
             align-items: center;
-            font-size: 24px;
         }
-        #key-display {
-            display: none;
-            margin-top: 20px;
-            font-size: 3rem; /* Large font size for the key */
-            color: lime;
-        }
-        .btn {
-            padding: 15px 25px;
-            font-size: 1.2rem;
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid white;
+            border-radius: 5px;
+            width: 300px;
+            margin-right: 10px;
+            background-color: #333;
             color: white;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
             border: none;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-5px);
+        button:hover {
+            background-color: #0056b3;
         }
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(0);
-            transition: transform 0.5s ease;
-            z-index: 1;
+        .result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
         }
-        .btn:hover::before {
-            transform: scale(2);
-        }
-        @keyframes fadeIn {
-            to { opacity: 1; }
+        .error {
+            color: red;
         }
     </style>
 </head>
 <body>
+
     <h1>Bypass Gateway</h1>
-
-    <input type="text" id="fluxus-url" placeholder="Enter URL" style="width: 300px; padding: 10px;">
-
-    <button class="btn" onclick="processBypass()">Submit</button>
-
-    <div id="overlay">Bypassing... Please wait.</div>
-
-    <div id="key-display"></div> <!-- Key display element -->
+    <div class="input-container">
+        <input type="text" id="urlInput" placeholder="Enter your link here">
+        <button id="submitButton">Submit</button>
+    </div>
+    <div class="result" id="resultDisplay"></div>
 
     <script>
-        function processBypass() {
-            const url = document.getElementById('fluxus-url').value;
-            const fluxusPattern = /https:\/\/flux\.li\/android\/external\/start\.php\?HWID=/;
-            const deltaPattern = /https:\/\/gateway\.platoboost\.com\/a\/8\?id=/;
-            const codexPattern = /https:\/\/codex\.li\/android\/external\/start\.php\?HWID=/;
-            const arceusXPattern = /https:\/\/arceusx\.li\/android\/external\/start\.php\?HWID=/;
-            const crypticPattern = /https:\/\/gateway\.platoboost\.com\/a\/39097\?id=/;
+        document.getElementById('submitButton').addEventListener('click', async () => {
+            const url = document.getElementById('urlInput').value;
+            const apiUrl = `http://luna.pylex.xyz:10234/api/bypass?url=${encodeURIComponent(url)}&api_key=spedxforfriez`;
+            
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
 
-            const overlay = document.getElementById('overlay');
-            const keyDisplay = document.getElementById('key-display');
-
-            keyDisplay.style.display = 'none'; // Hide key display initially
-            overlay.style.display = 'flex'; // Show loading overlay
-
-            let apiUrl;
-
-            if (fluxusPattern.test(url)) {
-                const hwid = url.replace('https://flux.li/android/external/start.php?HWID=', '');
-                apiUrl = `https://splendid-onyx-lillipilli.glitch.me/api/fluxus?hwid=${hwid}`;
-            } else if (deltaPattern.test(url)) {
-                const hwid = url.replace('https://gateway.platoboost.com/a/8?id=', '');
-                apiUrl = `https://splendid-onyx-lillipilli.glitch.me/api/delta?hwid=${hwid}`;
-            } else if (codexPattern.test(url)) {
-                const hwid = url.replace('https://codex.li/android/external/start.php?HWID=', '');
-                apiUrl = `https://splendid-onyx-lillipilli.glitch.me/api/codex?hwid=${hwid}`;
-            } else if (arceusXPattern.test(url)) {
-                const hwid = url.replace('https://arceusx.li/android/external/start.php?HWID=', '');
-                apiUrl = `https://splendid-onyx-lillipilli.glitch.me/api/arceusx?hwid=${hwid}`;
-            } else if (crypticPattern.test(url)) {
-                // Send the full URL to the cryptic API
-                apiUrl = `https://trusted-chambray-antelope.glitch.me/api/delta?url=${encodeURIComponent(url)}`;
-            } else {
-                overlay.style.display = 'none'; // Hide overlay
-                return; // Exit function for unsupported URL
+                if (data.key) {
+                    document.getElementById('resultDisplay').textContent = `Key: ${data.key}`;
+                    document.getElementById('resultDisplay').classList.remove('error');
+                } else {
+                    document.getElementById('resultDisplay').textContent = 'Unable To Retrieve Key';
+                    document.getElementById('resultDisplay').classList.add('error');
+                }
+            } catch (error) {
+                document.getElementById('resultDisplay').textContent = 'Unable To Retrieve Key';
+                document.getElementById('resultDisplay').classList.add('error');
             }
-
-            fetch(apiUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    overlay.style.display = 'none'; // Hide overlay
-                    if (data.key) {
-                        keyDisplay.textContent = data.key; // Display the extracted key
-                        keyDisplay.style.display = 'block'; // Show the key display
-                    } else {
-                        keyDisplay.textContent = "No key returned"; // Notify if no key is found
-                        keyDisplay.style.display = 'block'; // Show key display even if key is not found
-                    }
-                })
-                .catch(() => {
-                    overlay.style.display = 'none'; // Hide overlay
-                    keyDisplay.textContent = "No key returned"; // General notification
-                    keyDisplay.style.display = 'block'; // Show key display even on error
-                });
-        }
+        });
     </script>
+
 </body>
 </html>
