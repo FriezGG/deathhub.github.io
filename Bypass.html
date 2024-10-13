@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bypass Website</title>
     <style>
-        /* Basic styling for layout */
         body {
             background-color: black;
             color: white;
@@ -16,8 +15,8 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            opacity: 0; /* Initial opacity 0 for fade-in effect */
-            animation: fadeIn 2s forwards; /* Fade-in animation */
+            opacity: 0;
+            animation: fadeIn 2s forwards;
         }
         h1 {
             margin-bottom: 20px;
@@ -43,9 +42,9 @@
             display: none;
             margin-top: 20px;
         }
-        #copy-btn {
-            margin-left: 10px;
-            cursor: pointer;
+        #key {
+            font-size: 2rem;
+            color: lime;
         }
         .btn {
             padding: 15px 25px;
@@ -85,8 +84,6 @@
     </style>
 </head>
 <body>
-⚠️ | You might get some errors as the website isn't fully developed yet!
-
     <h1>Bypass Gateway</h1>
 
     <input type="text" id="fluxus-url" placeholder="Enter URL" style="width: 300px; padding: 10px;">
@@ -97,7 +94,6 @@
 
     <div id="key-compartment">
         <p>Key: <span id="key"></span></p>
-        <button id="copy-btn" onclick="copyKey()">Copy Key</button>
     </div>
 
     <p id="error-message">Unsupported URL or error occurred!</p>
@@ -110,75 +106,57 @@
             const codexPattern = /https:\/\/codex\.li\/android\/external\/start\.php\?HWID=/;
             const arceusXPattern = /https:\/\/arceusx\.li\/android\/external\/start\.php\?HWID=/;
             const crypticPattern = /https:\/\/gateway\.platoboost\.com\/a\/39097\?id=/;
-            const trigonevo6hrPattern = /https:\/\/trigonevo\.fun\/whitelist\/6h_start\.php\?HWID=/;
 
             let hwid, apiUrl;
             const errorMessage = document.getElementById('error-message');
+            const overlay = document.getElementById('overlay');
+            const keyCompartment = document.getElementById('key-compartment');
+            const keyDisplay = document.getElementById('key');
 
-            // Check if the URL matches Fluxus
+            errorMessage.style.display = 'none';
+            keyCompartment.style.display = 'none';
+            overlay.style.display = 'flex';
+
             if (fluxusPattern.test(url)) {
                 hwid = url.replace('https://flux.li/android/external/start.php?HWID=', '');
-                apiUrl = `https://stickx.top/api-fluxus/?hwid=${hwid}&api_key=E99l9NOctud3vmu6bPne`;
-            }
-            // Check if the URL matches Delta
-            else if (deltaPattern.test(url)) {
+                apiUrl = `https://splendid-onyx-lillipilli.glitch.me/api/fluxus?hwid=${hwid}`;
+            } else if (deltaPattern.test(url)) {
                 hwid = url.replace('https://gateway.platoboost.com/a/8?id=', '');
-                apiUrl = `https://stickx.top/api-delta/?hwid=${hwid}&api_key=E99l9NOctud3vmu6bPne`;
-            }
-            // Check if the URL matches Codex
-            else if (codexPattern.test(url)) {
-                hwid = url.replace('https://codex.li/android/external/start.php?HWID=', '');
-                apiUrl = `https://stickx.top/api-codex/?hwid=${hwid}&api_key=E99l9NOctud3vmu6bPne`;
-            }
-            // Check if the URL matches Arceus X
-            else if (arceusXPattern.test(url)) {
-                hwid = url.replace('https://arceusx.li/android/external/start.php?HWID=', '');
-                apiUrl = `https://stickx.top/api-arceusx/?hwid=${hwid}&api_key=E99l9NOctud3vmu6bPne`;
-            }
-            // Check if the URL matches Cryptic
-            else if (crypticPattern.test(url)) {
-                hwid = url.split('id=')[1];
                 apiUrl = `https://splendid-onyx-lillipilli.glitch.me/api/delta?hwid=${hwid}`;
-            }
-            // Check if the URL matches Trigonevo 6hr
-            else if (trigonevo6hrPattern.test(url)) {
-                hwid = url.replace('https://trigonevo.fun/whitelist/6h_start.php?HWID=', '');
-                apiUrl = `https://stickx.top/api-trigonevo/?hwid=${hwid}&api_key=E99l9NOctud3vmu6bPne&duration=6`;
-            }
-            else {
+            } else if (codexPattern.test(url)) {
+                hwid = url.replace('https://codex.li/android/external/start.php?HWID=', '');
+                apiUrl = `https://splendid-onyx-lillipilli.glitch.me/api/codex?hwid=${hwid}`;
+            } else if (arceusXPattern.test(url)) {
+                hwid = url.replace('https://arceusx.li/android/external/start.php?HWID=', '');
+                apiUrl = `https://splendid-onyx-lillipilli.glitch.me/api/arceusx?hwid=${hwid}`;
+            } else if (crypticPattern.test(url)) {
+                hwid = url.replace('https://gateway.platoboost.com/a/39097?id=', '');
+                apiUrl = `https://splendid-onyx-lillipilli.glitch.me/api/cryptic?hwid=${hwid}`;
+            } else {
+                overlay.style.display = 'none';
+                errorMessage.textContent = "Unsupported URL!";
                 errorMessage.style.display = 'block';
                 return;
             }
 
-            // Show the overlay and process the API call
-            document.getElementById('overlay').style.display = 'flex';
-
-            // Make an API request
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('overlay').style.display = 'none';
+                    overlay.style.display = 'none';
                     if (data.key) {
-                        document.getElementById('key').innerText = data.key;
-                        document.getElementById('key-compartment').style.display = 'block';
-                        errorMessage.style.display = 'none';
+                        keyDisplay.textContent = data.key;
+                        keyCompartment.style.display = 'block';
                     } else {
+                        errorMessage.textContent = "Unable to bypass!";
                         errorMessage.style.display = 'block';
                     }
                 })
                 .catch(() => {
-                    document.getElementById('overlay').style.display = 'none';
+                    overlay.style.display = 'none';
+                    errorMessage.textContent = "Unsupported URL or error occurred!";
                     errorMessage.style.display = 'block';
                 });
         }
-
-        function copyKey() {
-            const keyText = document.getElementById('key').innerText;
-            navigator.clipboard.writeText(keyText).then(() => {
-                alert('Key copied to clipboard!');
-            });
-        }
     </script>
-
 </body>
 </html>
