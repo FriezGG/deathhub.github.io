@@ -54,6 +54,10 @@
         .error {
             color: red;
         }
+        .loading {
+            font-size: 20px;
+            color: yellow;
+        }
     </style>
 </head>
 <body>
@@ -69,21 +73,27 @@
         document.getElementById('submitButton').addEventListener('click', async () => {
             const url = document.getElementById('urlInput').value;
             const apiUrl = `http://luna.pylex.xyz:10234/api/bypass?url=${encodeURIComponent(url)}&api_key=spedxforfriez`;
+            const resultDisplay = document.getElementById('resultDisplay');
+
+            // Show loading message
+            resultDisplay.textContent = 'Loading...';
+            resultDisplay.classList.remove('error');
             
             try {
                 const response = await fetch(apiUrl);
                 const data = await response.json();
 
+                // Extract 'key' from the response
                 if (data.key) {
-                    document.getElementById('resultDisplay').textContent = `Key: ${data.key}`;
-                    document.getElementById('resultDisplay').classList.remove('error');
+                    resultDisplay.textContent = `Key: ${data.key}`;
+                    resultDisplay.classList.remove('error');
                 } else {
-                    document.getElementById('resultDisplay').textContent = 'Unable To Retrieve Key';
-                    document.getElementById('resultDisplay').classList.add('error');
+                    resultDisplay.textContent = 'Unable To Retrieve Key';
+                    resultDisplay.classList.add('error');
                 }
             } catch (error) {
-                document.getElementById('resultDisplay').textContent = 'Unable To Retrieve Key';
-                document.getElementById('resultDisplay').classList.add('error');
+                resultDisplay.textContent = 'Unable To Retrieve Key';
+                resultDisplay.classList.add('error');
             }
         });
     </script>
