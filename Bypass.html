@@ -78,9 +78,15 @@
             // Show loading message
             resultDisplay.textContent = 'Loading...';
             resultDisplay.classList.remove('error');
-            
+
             try {
                 const response = await fetch(apiUrl);
+                
+                // Ensure we get a successful response
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
                 const data = await response.json();
 
                 // Extract 'key' from the response
@@ -92,6 +98,7 @@
                     resultDisplay.classList.add('error');
                 }
             } catch (error) {
+                // Handle any errors, including those from network issues or if key is not present
                 resultDisplay.textContent = 'Unable To Retrieve Key';
                 resultDisplay.classList.add('error');
             }
