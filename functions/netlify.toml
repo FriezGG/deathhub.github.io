@@ -1,7 +1,9 @@
 [build]
-  functions = "functions"
+  publish = "."
+  command = ""  # Leave this blank for static sites
 
 [[redirects]]
-  from = "/get-app"
-  to = "/.netlify/functions/get-app"
+  from = "/*"
+  to = "/index.html"
   status = 200
+
